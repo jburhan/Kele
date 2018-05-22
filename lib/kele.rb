@@ -25,4 +25,10 @@ class Kele
     response = Kele.get("#{@base_url}/users/me", headers: { "authorization" => @auth_token })
     @user = JSON.parse(response.body)
   end
+
+  def get_mentor_availability(mentor_id)
+    @base_url = 'https://www.bloc.io/api/v1'
+    response = Kele.get("#{@base_url}/mentors/#{mentor_id}/student_availability", headers: { "authorization" => @auth_token })
+    @user = JSON.parse(response.body)
+  end
 end
