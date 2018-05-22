@@ -1,7 +1,8 @@
 require 'httparty'
+require 'json'
 
 class Kele
-include HTTParty
+  include HTTParty
 
   def initialize(email, password)
     @base_url = 'https://www.bloc.io/api/v1'
@@ -17,5 +18,11 @@ include HTTParty
     else
       puts "Login invalid"
     end
+
+  end
+
+  def get_me
+    response = Kele.get("/users/me", headers: { "authorization" => @auth_token })
+    JSON.parse(response.body)
   end
 end
