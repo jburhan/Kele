@@ -6,7 +6,6 @@ class Kele
 
   def initialize(email, password)
     @base_url = 'https://www.bloc.io/api/v1'
-
     response = Kele.post(
       "#{@base_url}/sessions",
       body: { email: email, password: password }
@@ -22,7 +21,8 @@ class Kele
   end
 
   def get_me
-    response = Kele.get("/users/me", headers: { "authorization" => @auth_token })
-    JSON.parse(response.body)
+    @base_url = 'https://www.bloc.io/api/v1'
+    response = Kele.get("#{@base_url}/users/me", headers: { "authorization" => @auth_token })
+    @user = JSON.parse(response.body)
   end
 end
