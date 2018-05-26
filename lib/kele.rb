@@ -33,4 +33,22 @@ class Kele
     response = Kele.get("#{@base_url}/mentors/#{mentor_id}/student_availability", headers: { "authorization" => @auth_token })
     @mentor = JSON.parse(response.body)
   end
+
+  def get_messages(page_num = nil)
+    @base_url = 'https://www.bloc.io/api/v1'
+    if page_num == nil
+      response = Kele.get("#{@base_url}/message_threads", headers: { "authorization" => @auth_token })
+    else
+      response = Kele.get("#{@base_url}/message_threads?page=#{page_num}", headers: { "authorization" => @auth_token })
+    end
+    @messages = JSON.parse(response.body)
+  end
+
+  def create_message(user_id, recipient_id, token, subject, message)
+    @base_url = 'https://www.bloc.io/api/v1'
+    response = Kele.post("#{@base_url}/messages", body: { "user_id": user_id,"recipient_id": recipient_id,
+        "token": token, "subject": subject, "stripped_text": message }, headers: { "authorization" => @auth_token })
+    puts response
+  end
+
 end
